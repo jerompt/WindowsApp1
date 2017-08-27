@@ -1,0 +1,15 @@
+c:\users\jerónimo\documents\visual studio 2017\Projects\WindowsApp1\WindowsApp1\bin\Debug\WindowsApp1.exe.config
+c:\users\jerónimo\documents\visual studio 2017\Projects\WindowsApp1\WindowsApp1\bin\Debug\WindowsApp1.exe
+c:\users\jerónimo\documents\visual studio 2017\Projects\WindowsApp1\WindowsApp1\bin\Debug\WindowsApp1.pdb
+c:\users\jerónimo\documents\visual studio 2017\Projects\WindowsApp1\WindowsApp1\bin\Debug\WindowsApp1.xml
+c:\users\jerónimo\documents\visual studio 2017\Projects\WindowsApp1\WindowsApp1\obj\Debug\WindowsApp1.vbprojResolveAssemblyReference.cache
+c:\users\jerónimo\documents\visual studio 2017\Projects\WindowsApp1\WindowsApp1\obj\Debug\WindowsApp1.Form1.resources
+c:\users\jerónimo\documents\visual studio 2017\Projects\WindowsApp1\WindowsApp1\obj\Debug\WindowsApp1.Resources.resources
+c:\users\jerónimo\documents\visual studio 2017\Projects\WindowsApp1\WindowsApp1\obj\Debug\WindowsApp1.vbproj.GenerateResource.Cache
+c:\users\jerónimo\documents\visual studio 2017\Projects\WindowsApp1\WindowsApp1\obj\Debug\WindowsApp1.exe
+c:\users\jerónimo\documents\visual studio 2017\Projects\WindowsApp1\WindowsApp1\obj\Debug\WindowsApp1.xml
+c:\users\jerónimo\documents\visual studio 2017\Projects\WindowsApp1\WindowsApp1\obj\Debug\WindowsApp1.pdb
+C:\Users\Jerónimo\Documents\Visual Studio 2017\Projects\WindowsApp1\WindowsApp1\obj\Debug\WindowsApp1.Form2.resources
+C:\Users\Jerónimo\documents\visual studio 2017\Projects\WindowsApp1\WindowsApp1\obj\Debug\WindowsApp1.Form3.resources
+C:\Users\Jerónimo\documents\visual studio 2017\Projects\WindowsApp1\WindowsApp1\obj\Debug\WindowsApp1.Votacion.resources
+C:\Users\Jerónimo\documents\visual studio 2017\Projects\WindowsApp1\WindowsApp1\obj\Debug\WindowsApp1.vbproj.CoreCompileInputs.cache
