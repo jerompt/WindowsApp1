@@ -22,5 +22,165 @@ WindowsApp1
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
+<member name="T:WindowsApp1.asambleas_dbDataSet">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:WindowsApp1.asambleas_dbDataSet.asambleasDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:WindowsApp1.asambleas_dbDataSet.propiedadesDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:WindowsApp1.asambleas_dbDataSet.proyectosDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:WindowsApp1.asambleas_dbDataSet.puntosDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:WindowsApp1.asambleas_dbDataSet.votosDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:WindowsApp1.asambleas_dbDataSet.DataTable1DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:WindowsApp1.asambleas_dbDataSet.asambleasRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:WindowsApp1.asambleas_dbDataSet.propiedadesRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:WindowsApp1.asambleas_dbDataSet.proyectosRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:WindowsApp1.asambleas_dbDataSet.puntosRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:WindowsApp1.asambleas_dbDataSet.votosRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:WindowsApp1.asambleas_dbDataSet.DataTable1Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:WindowsApp1.asambleas_dbDataSet.asambleasRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:WindowsApp1.asambleas_dbDataSet.propiedadesRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:WindowsApp1.asambleas_dbDataSet.proyectosRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:WindowsApp1.asambleas_dbDataSet.puntosRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:WindowsApp1.asambleas_dbDataSet.votosRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:WindowsApp1.asambleas_dbDataSet.DataTable1RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:WindowsApp1.asambleas_dbDataSetTableAdapters.asambleasTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:WindowsApp1.asambleas_dbDataSetTableAdapters.propiedadesTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:WindowsApp1.asambleas_dbDataSetTableAdapters.proyectosTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:WindowsApp1.asambleas_dbDataSetTableAdapters.puntosTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:WindowsApp1.asambleas_dbDataSetTableAdapters.votosTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:WindowsApp1.asambleas_dbDataSetTableAdapters.TableAdapterManager">
+<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
+</member>
+<member name="M:WindowsApp1.asambleas_dbDataSetTableAdapters.TableAdapterManager.UpdateUpdatedRows(WindowsApp1.asambleas_dbDataSet,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Update rows in top-down order.
+</summary>
+</member>
+<member name="M:WindowsApp1.asambleas_dbDataSetTableAdapters.TableAdapterManager.UpdateInsertedRows(WindowsApp1.asambleas_dbDataSet,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Insert rows in top-down order.
+</summary>
+</member>
+<member name="M:WindowsApp1.asambleas_dbDataSetTableAdapters.TableAdapterManager.UpdateDeletedRows(WindowsApp1.asambleas_dbDataSet,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Delete rows in bottom-up order.
+</summary>
+</member>
+<member name="M:WindowsApp1.asambleas_dbDataSetTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member>
+<member name="M:WindowsApp1.asambleas_dbDataSetTableAdapters.TableAdapterManager.UpdateAll(WindowsApp1.asambleas_dbDataSet)">
+<summary>
+Update all changes to the dataset.
+</summary>
+</member>
+<member name="T:WindowsApp1.asambleas_dbDataSetTableAdapters.TableAdapterManager.UpdateOrderOption">
+<summary>
+Update Order Option
+</summary>
+</member>
+<member name="T:WindowsApp1.asambleas_dbDataSetTableAdapters.TableAdapterManager.SelfReferenceComparer">
+<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member>
 </members>
 </doc>

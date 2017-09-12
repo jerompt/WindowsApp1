@@ -50,6 +50,7 @@
     <Reference Include="MessagingToolkit.Barcode">
       <HintPath>..\..\..\..\..\hubiC\Asambleas\MessagingToolkit.Barcode.dll</HintPath>
     </Reference>
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -75,6 +76,17 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AgregarAsamblea.Designer.vb">
+      <DependentUpon>AgregarAsamblea.vb</DependentUpon>
+    </Compile>
+    <Compile Include="AgregarAsamblea.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="asambleas_dbDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>asambleas_dbDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -94,6 +106,7 @@
     <Compile Include="Main Menu.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Module1.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -117,6 +130,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AgregarAsamblea.resx">
+      <DependentUpon>AgregarAsamblea.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>
     </EmbeddedResource>
@@ -137,6 +153,17 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="asambleas_dbDataSet.xsc">
+      <DependentUpon>asambleas_dbDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="asambleas_dbDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>asambleas_dbDataSet.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="asambleas_dbDataSet.xss">
+      <DependentUpon>asambleas_dbDataSet.xsd</DependentUpon>
+    </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

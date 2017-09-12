@@ -22,65 +22,37 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Me.components = New System.ComponentModel.Container()
         Me.dgvAsistencia = New System.Windows.Forms.DataGridView()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.lblAsistenciaTotal = New System.Windows.Forms.Label()
-        Me.lblNombre = New System.Windows.Forms.Label()
         Me.btnVotacion = New System.Windows.Forms.Button()
         Me.btnGenerarCodigos = New System.Windows.Forms.Button()
+        Me.btn_CAsamblea = New System.Windows.Forms.Button()
+        Me.Asambleas_dbDataSet = New WindowsApp1.asambleas_dbDataSet()
+        Me.ProyectosBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.ProyectosTableAdapter = New WindowsApp1.asambleas_dbDataSetTableAdapters.proyectosTableAdapter()
+        Me.PropiedadesBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.PropiedadesTableAdapter = New WindowsApp1.asambleas_dbDataSetTableAdapters.propiedadesTableAdapter()
+        Me.lblNombre = New System.Windows.Forms.Label()
         CType(Me.dgvAsistencia, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Asambleas_dbDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ProyectosBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PropiedadesBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'dgvAsistencia
         '
         Me.dgvAsistencia.AllowUserToAddRows = False
         Me.dgvAsistencia.AllowUserToDeleteRows = False
+        Me.dgvAsistencia.AllowUserToResizeRows = False
+        Me.dgvAsistencia.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgvAsistencia.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvAsistencia.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3, Me.Column4, Me.Column5})
-        Me.dgvAsistencia.Location = New System.Drawing.Point(16, 56)
+        Me.dgvAsistencia.Location = New System.Drawing.Point(16, 64)
         Me.dgvAsistencia.Name = "dgvAsistencia"
+        Me.dgvAsistencia.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dgvAsistencia.RowTemplate.Height = 24
-        Me.dgvAsistencia.Size = New System.Drawing.Size(979, 692)
+        Me.dgvAsistencia.Size = New System.Drawing.Size(979, 709)
         Me.dgvAsistencia.TabIndex = 0
-        '
-        'Column1
-        '
-        Me.Column1.HeaderText = "Departamento"
-        Me.Column1.Name = "Column1"
-        Me.Column1.ReadOnly = True
-        '
-        'Column2
-        '
-        Me.Column2.HeaderText = "Torre"
-        Me.Column2.Name = "Column2"
-        Me.Column2.ReadOnly = True
-        '
-        'Column3
-        '
-        Me.Column3.HeaderText = "Propietario"
-        Me.Column3.Name = "Column3"
-        Me.Column3.ReadOnly = True
-        Me.Column3.Width = 250
-        '
-        'Column4
-        '
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.BottomLeft
-        DataGridViewCellStyle1.Format = "N4"
-        DataGridViewCellStyle1.NullValue = Nothing
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle1
-        Me.Column4.HeaderText = "Indiviso"
-        Me.Column4.Name = "Column4"
-        '
-        'Column5
-        '
-        Me.Column5.HeaderText = "Asistencia"
-        Me.Column5.Name = "Column5"
-        Me.Column5.ReadOnly = True
         '
         'lblAsistenciaTotal
         '
@@ -90,18 +62,9 @@ Partial Class Form1
         Me.lblAsistenciaTotal.Size = New System.Drawing.Size(0, 17)
         Me.lblAsistenciaTotal.TabIndex = 2
         '
-        'lblNombre
-        '
-        Me.lblNombre.AutoSize = True
-        Me.lblNombre.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblNombre.Location = New System.Drawing.Point(12, 9)
-        Me.lblNombre.Name = "lblNombre"
-        Me.lblNombre.Size = New System.Drawing.Size(301, 23)
-        Me.lblNombre.TabIndex = 5
-        Me.lblNombre.Text = "Sistema de Votación Cobalto"
-        '
         'btnVotacion
         '
+        Me.btnVotacion.Anchor = System.Windows.Forms.AnchorStyles.Right
         Me.btnVotacion.Location = New System.Drawing.Point(1001, 207)
         Me.btnVotacion.Name = "btnVotacion"
         Me.btnVotacion.Size = New System.Drawing.Size(170, 56)
@@ -111,6 +74,7 @@ Partial Class Form1
         '
         'btnGenerarCodigos
         '
+        Me.btnGenerarCodigos.Anchor = System.Windows.Forms.AnchorStyles.Right
         Me.btnGenerarCodigos.Location = New System.Drawing.Point(1001, 132)
         Me.btnGenerarCodigos.Name = "btnGenerarCodigos"
         Me.btnGenerarCodigos.Size = New System.Drawing.Size(170, 56)
@@ -118,11 +82,55 @@ Partial Class Form1
         Me.btnGenerarCodigos.Text = "Generar Codigos para Asamblea"
         Me.btnGenerarCodigos.UseVisualStyleBackColor = True
         '
+        'btn_CAsamblea
+        '
+        Me.btn_CAsamblea.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.btn_CAsamblea.Location = New System.Drawing.Point(1001, 56)
+        Me.btn_CAsamblea.Name = "btn_CAsamblea"
+        Me.btn_CAsamblea.Size = New System.Drawing.Size(170, 56)
+        Me.btn_CAsamblea.TabIndex = 11
+        Me.btn_CAsamblea.Text = "Crear Asamblea"
+        Me.btn_CAsamblea.UseVisualStyleBackColor = True
+        '
+        'Asambleas_dbDataSet
+        '
+        Me.Asambleas_dbDataSet.DataSetName = "asambleas_dbDataSet"
+        Me.Asambleas_dbDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        '
+        'ProyectosBindingSource
+        '
+        Me.ProyectosBindingSource.DataMember = "proyectos"
+        Me.ProyectosBindingSource.DataSource = Me.Asambleas_dbDataSet
+        '
+        'ProyectosTableAdapter
+        '
+        Me.ProyectosTableAdapter.ClearBeforeFill = True
+        '
+        'PropiedadesBindingSource
+        '
+        Me.PropiedadesBindingSource.DataMember = "propiedades"
+        Me.PropiedadesBindingSource.DataSource = Me.Asambleas_dbDataSet
+        '
+        'PropiedadesTableAdapter
+        '
+        Me.PropiedadesTableAdapter.ClearBeforeFill = True
+        '
+        'lblNombre
+        '
+        Me.lblNombre.AutoSize = True
+        Me.lblNombre.Font = New System.Drawing.Font("Century Gothic", 19.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblNombre.Location = New System.Drawing.Point(12, 9)
+        Me.lblNombre.Name = "lblNombre"
+        Me.lblNombre.Size = New System.Drawing.Size(501, 40)
+        Me.lblNombre.TabIndex = 5
+        Me.lblNombre.Text = "Sistema de Votación Cobalto"
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1469, 785)
+        Me.ClientSize = New System.Drawing.Size(1183, 785)
+        Me.Controls.Add(Me.btn_CAsamblea)
         Me.Controls.Add(Me.btnGenerarCodigos)
         Me.Controls.Add(Me.btnVotacion)
         Me.Controls.Add(Me.lblNombre)
@@ -131,6 +139,9 @@ Partial Class Form1
         Me.Name = "Form1"
         Me.Text = "Sistema de Votacion Cobalto"
         CType(Me.dgvAsistencia, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Asambleas_dbDataSet, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ProyectosBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PropiedadesBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -138,12 +149,13 @@ Partial Class Form1
 
     Friend WithEvents dgvAsistencia As DataGridView
     Friend WithEvents lblAsistenciaTotal As Label
-    Friend WithEvents Column1 As DataGridViewTextBoxColumn
-    Friend WithEvents Column2 As DataGridViewTextBoxColumn
-    Friend WithEvents Column3 As DataGridViewTextBoxColumn
-    Friend WithEvents Column4 As DataGridViewTextBoxColumn
-    Friend WithEvents Column5 As DataGridViewTextBoxColumn
-    Friend WithEvents lblNombre As Label
     Friend WithEvents btnVotacion As Button
     Friend WithEvents btnGenerarCodigos As Button
+    Friend WithEvents btn_CAsamblea As Button
+    Friend WithEvents Asambleas_dbDataSet As asambleas_dbDataSet
+    Friend WithEvents ProyectosBindingSource As BindingSource
+    Friend WithEvents ProyectosTableAdapter As asambleas_dbDataSetTableAdapters.proyectosTableAdapter
+    Friend WithEvents PropiedadesBindingSource As BindingSource
+    Friend WithEvents PropiedadesTableAdapter As asambleas_dbDataSetTableAdapters.propiedadesTableAdapter
+    Friend WithEvents lblNombre As Label
 End Class

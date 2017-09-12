@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="asambleas_dbDataSet" targetNamespace="http://tempuri.org/asambleas_dbDataSet.xsd" xmlns:mstns="http://tempuri.org/asambleas_dbDataSet.xsd" xmlns="http://tempuri.org/asambleas_dbDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="MySettings" AppSettingsPropertyName="asambleas_dbConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="asambleas_dbConnectionString (MySettings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.WindowsApp1.My.MySettings.GlobalReference.Default.asambleas_dbConnectionString" Provider="MySql.Data.MySqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="asambleasTableAdapter" GeneratorDataComponentClassName="asambleasTableAdapter" Name="asambleas" UserDataComponentName="asambleasTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="asambleas_dbConnectionString (MySettings)" DbObjectName="asambleas_db.asambleas" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT `id_asamblea`, `proyecto_id`, `n_asamblea`, `nom_asamblea`, `fecha_asamblea`, `a_date`, `proy_logo` FROM `asambleas`</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings />
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="propiedadesTableAdapter" GeneratorDataComponentClassName="propiedadesTableAdapter" Name="propiedades" UserDataComponentName="propiedadesTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="asambleas_dbConnectionString (MySettings)" DbObjectName="asambleas_db.propiedades" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT `id_propiedad`, `proyecto_id`, `n_propiedad`, `nom_propietario`, `torre`, `depto`, `indiviso`, `prop_date` FROM `propiedades`</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings />
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="proyectosTableAdapter" GeneratorDataComponentClassName="proyectosTableAdapter" Name="proyectos" UserDataComponentName="proyectosTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="asambleas_dbConnectionString (MySettings)" DbObjectName="asambleas_db.proyectos" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT `id_proyecto`, `nom_proyecto`, `num_prop`, `proy_date`, `proy_logo` FROM `proyectos`</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings />
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="puntosTableAdapter" GeneratorDataComponentClassName="puntosTableAdapter" Name="puntos" UserDataComponentName="puntosTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="asambleas_dbConnectionString (MySettings)" DbObjectName="asambleas_db.puntos" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT `id_punto`, `asamblea_id`, `id_int_punto`, `num_punto`, `pun_date` FROM `puntos`</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings />
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="votosTableAdapter" GeneratorDataComponentClassName="votosTableAdapter" Name="votos" UserDataComponentName="votosTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="asambleas_dbConnectionString (MySettings)" DbObjectName="asambleas_db.votos" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT `id_voto`, `propiedad_id`, `asamblea_id`, `punto_id`, `voto_val`, `date_time`, `ultimo_cambio` FROM `votos`</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings />
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="asambleas_dbDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="asambleas_dbDataSet" msprop:Generator_UserDSName="asambleas_dbDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="asambleas" msprop:Generator_TableClassName="asambleasDataTable" msprop:Generator_TableVarName="tableasambleas" msprop:Generator_RowChangedName="asambleasRowChanged" msprop:Generator_TablePropName="asambleas" msprop:Generator_RowDeletingName="asambleasRowDeleting" msprop:Generator_RowChangingName="asambleasRowChanging" msprop:Generator_RowEvHandlerName="asambleasRowChangeEventHandler" msprop:Generator_RowDeletedName="asambleasRowDeleted" msprop:Generator_RowClassName="asambleasRow" msprop:Generator_UserTableName="asambleas" msprop:Generator_RowEvArgName="asambleasRowChangeEvent">
+          <xs:complexType>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="propiedades" msprop:Generator_TableClassName="propiedadesDataTable" msprop:Generator_TableVarName="tablepropiedades" msprop:Generator_RowChangedName="propiedadesRowChanged" msprop:Generator_TablePropName="propiedades" msprop:Generator_RowDeletingName="propiedadesRowDeleting" msprop:Generator_RowChangingName="propiedadesRowChanging" msprop:Generator_RowEvHandlerName="propiedadesRowChangeEventHandler" msprop:Generator_RowDeletedName="propiedadesRowDeleted" msprop:Generator_RowClassName="propiedadesRow" msprop:Generator_UserTableName="propiedades" msprop:Generator_RowEvArgName="propiedadesRowChangeEvent">
+          <xs:complexType>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="proyectos" msprop:Generator_TableClassName="proyectosDataTable" msprop:Generator_TableVarName="tableproyectos" msprop:Generator_RowChangedName="proyectosRowChanged" msprop:Generator_TablePropName="proyectos" msprop:Generator_RowDeletingName="proyectosRowDeleting" msprop:Generator_RowChangingName="proyectosRowChanging" msprop:Generator_RowEvHandlerName="proyectosRowChangeEventHandler" msprop:Generator_RowDeletedName="proyectosRowDeleted" msprop:Generator_RowClassName="proyectosRow" msprop:Generator_UserTableName="proyectos" msprop:Generator_RowEvArgName="proyectosRowChangeEvent">
+          <xs:complexType>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="puntos" msprop:Generator_TableClassName="puntosDataTable" msprop:Generator_TableVarName="tablepuntos" msprop:Generator_RowChangedName="puntosRowChanged" msprop:Generator_TablePropName="puntos" msprop:Generator_RowDeletingName="puntosRowDeleting" msprop:Generator_RowChangingName="puntosRowChanging" msprop:Generator_RowEvHandlerName="puntosRowChangeEventHandler" msprop:Generator_RowDeletedName="puntosRowDeleted" msprop:Generator_RowClassName="puntosRow" msprop:Generator_UserTableName="puntos" msprop:Generator_RowEvArgName="puntosRowChangeEvent">
+          <xs:complexType>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="votos" msprop:Generator_TableClassName="votosDataTable" msprop:Generator_TableVarName="tablevotos" msprop:Generator_RowChangedName="votosRowChanged" msprop:Generator_TablePropName="votos" msprop:Generator_RowDeletingName="votosRowDeleting" msprop:Generator_RowChangingName="votosRowChanging" msprop:Generator_RowEvHandlerName="votosRowChangeEventHandler" msprop:Generator_RowDeletedName="votosRowDeleted" msprop:Generator_RowClassName="votosRow" msprop:Generator_UserTableName="votos" msprop:Generator_RowEvArgName="votosRowChangeEvent">
+          <xs:complexType>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DataTable1" msprop:Generator_TableClassName="DataTable1DataTable" msprop:Generator_TableVarName="tableDataTable1" msprop:Generator_TablePropName="DataTable1" msprop:Generator_RowDeletingName="DataTable1RowDeleting" msprop:Generator_RowChangingName="DataTable1RowChanging" msprop:Generator_RowEvHandlerName="DataTable1RowChangeEventHandler" msprop:Generator_RowDeletedName="DataTable1RowDeleted" msprop:Generator_UserTableName="DataTable1" msprop:Generator_RowChangedName="DataTable1RowChanged" msprop:Generator_RowEvArgName="DataTable1RowChangeEvent" msprop:Generator_RowClassName="DataTable1Row">
+          <xs:complexType>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
