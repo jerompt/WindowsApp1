@@ -3,20 +3,16 @@ Imports MySql.Data.MySqlClient
 
 Module GlobalVariables
 
-    Public G_Depto As New List(Of String)
-    Public G_Torre As New List(Of String)
-    Public G_Propietario As New List(Of String)
-    Public G_Indiviso As New List(Of Double)
-    Public G_BuildingName As String
 
-    Public G_CodeGen As New List(Of String)
-    Public G_PropiedadID As New List(Of String)
-    Public G_NAsamblea As String
-    Public G_AsambleaPuntos As New List(Of String)
     Public G_NumAsa As Integer
 
     Public G_Build_ID As Integer
     Public G_Asamb_ID As Integer
+
+    Public GL_depto As String
+    Public GL_torre As String
+    Public GL_indiviso As String
+    Public GL_PropID As String
 
 
 End Module
@@ -51,7 +47,7 @@ Module Module1
             End If
             dbCon.Close()
         Catch ex As Exception
-            MsgBox("Failure to communicate!" & vbCrLf & ex.Message)
+            MsgBox("24" & vbCrLf & ex.Message)
         End Try
 
     End Function
@@ -84,7 +80,7 @@ Module Module1
 
             dbCon.Close()
         Catch ex As Exception
-            MsgBox("Failure to communicate!" & vbCrLf & ex.Message)
+            MsgBox("23" & vbCrLf & ex.Message)
         End Try
 
     End Function
@@ -149,7 +145,7 @@ A:
 
             dbCon.Close()
         Catch ex As Exception
-            MsgBox("Failure to communicate!" & vbCrLf & ex.Message)
+            MsgBox("22" & vbCrLf & ex.Message)
         End Try
 
     End Function
@@ -296,76 +292,164 @@ A:
         Return value
     End Function
 
-    Public Function LimpiarPunto(ByVal i As Integer)
+    Public Function LimpiarPunto(i)
 
         Dim code As String = ""
-        Dim myString As String
-        Dim minStr As String
-        Dim f As Integer
-        Dim g As Integer
 
-
-        myString = G_AsambleaPuntos(i)
-        minStr = myString.Chars(0) & myString.Chars(1)
-        f = Convert.ToInt32(minStr)
-        minStr = myString.Chars(2) & myString.Chars(3)
-        g = Convert.ToInt32(minStr)
-
-        If f > 0 Then
-            code = f.ToString
-        End If
-
-        If g > 0 Then
-            code = code & "." & g.ToString
+        If i < 10 Then
+            code = " " & i
         End If
 
         Return code
 
     End Function
 
-    Public Function Get_num_punto()
+    Public Function Get_Punto(n)
         Dim numP As Integer
+        Dim dbCon As MySqlConnection
+        Dim strQuerry As String = ""
+        Dim SQLCmd As MySqlCommand
+        Dim DR As MySqlDataReader
+
+        Try
+            dbCon = New MySqlConnection("Server=localhost;Database=asambleas_db;Uid=root;Pwd=1234")
+            strQuerry = "SELECT nom_asamblea FROM asambleas_db.asambleas WHERE asambleas.n_asamblea = '" & n & "';"
+            SQLCmd = New MySqlCommand(strQuerry, dbCon)
+            ' OPEN the DB and Kickoff the Query
+            dbCon.Open()
+            DR = SQLCmd.ExecuteReader
+
+            Return DR.Item("nom_asamblea")
+
+            dbCon.Close()
+
+        Catch ex As Exception
+            MsgBox("22" & vbCrLf & ex.Message)
+        End Try
+
 
         Return numP
     End Function
 
-    Public Function Get_depto()
-        Dim depto As String = ""
+    ' Obtiene informacion de Propiedad para generar Codigos
+    Public Sub Get_PropInfo(n)
+        GL_depto = ""
+        GL_torre = ""
+        GL_indiviso = ""
+        GL_PropID = ""
 
-        Return depto
-    End Function
+        Dim dbCon As MySqlConnection
+        dbCon = New MySqlConnection("Server=localhost;Database=asambleas_db;Uid=root;Pwd=1234")
+        Dim strQuerry As String = ""
+        Dim SQLCmd As MySqlCommand
+        Dim DR As MySqlDataReader
+        Try
+            strQuerry = "SELECT n_propiedad, torre, depto, indiviso FROM asambleas_db.propiedades WHERE proyecto_id = " & G_Build_ID & "
+                            LIMIT " & n & ",1 ;"
+            SQLCmd = New MySqlCommand(strQuerry, dbCon)
+            Console.WriteLine(SQLCmd)
+            ' OPEN the DB and Kickoff the Query
+            dbCon.Open()
+            DR = SQLCmd.ExecuteReader
+            DR.Read()
+            GL_PropID = DR.Item("n_propiedad")
+            GL_torre = DR.Item("torre")
+            GL_depto = DR.Item("depto")
+            GL_indiviso = DR.Item("indiviso")
+            dbCon.Close()
+        Catch ex As Exception
+            MsgBox("21" & vbCrLf & ex.Message)
+        End Try
 
-    Public Function GetTorreYDepa(ByVal i As Integer)
-        ' Se limpia al pintar Torre y Depa
+    End Sub
+
+    Public Function GetTorreYDepa()
         Dim torreYdepa As String = ""
 
-        If G_Torre(i) = "" Then
-            torreYdepa = G_Depto(i)
+        If GL_torre = "" Then
+            torreYdepa = GL_depto
         Else
-            torreYdepa = G_Torre(i) & " - " & G_Depto(i)
+            torreYdepa = GL_torre & " - " & GL_depto
         End If
 
         Return torreYdepa
 
     End Function
 
-    Public Function Get_nom_punto()
-        Dim nomP As String = ""
-
-        Return nomP
+    Public Function Get_nom_punto(n)
+        Dim dbCon As MySqlConnection
+        dbCon = New MySqlConnection("Server=localhost;Database=asambleas_db;Uid=root;Pwd=1234")
+        Dim strQuerry As String = ""
+        Dim SQLCmd As MySqlCommand
+        Dim DR As MySqlDataReader
+        Dim a As String
+        Try
+            strQuerry = "SELECT num_punto FROM asambleas_db.puntos WHERE asamblea_id = " & G_Asamb_ID & "
+                            LIMIT " & n & ",1 ;"
+            SQLCmd = New MySqlCommand(strQuerry, dbCon)
+            Console.WriteLine(SQLCmd)
+            ' OPEN the DB and Kickoff the Query
+            dbCon.Open()
+            DR = SQLCmd.ExecuteReader
+            DR.Read()
+            a = DR.Item("num_punto")
+        Catch ex As Exception
+            MsgBox("20" & vbCrLf & ex.Message)
+        End Try
+        Return a
     End Function
 
-    Public Function Get_nom_asamblea()
-        Dim nom As String = ""
+    Public Function Get_nom_asamblea(n)
+        Dim dbCon As MySqlConnection
+        Dim strQuerry As String = ""
+        Dim SQLCmd As MySqlCommand
+        Dim DR As MySqlDataReader
 
-        Return nom
+        Try
+            dbCon = New MySqlConnection("Server=localhost;Database=asambleas_db;Uid=root;Pwd=1234")
+            strQuerry = "SELECT nom_asamblea FROM asambleas_db.asambleas WHERE asambleas.n_asamblea = '" & n & "';"
+            SQLCmd = New MySqlCommand(strQuerry, dbCon)
+            ' OPEN the DB and Kickoff the Query
+            dbCon.Open()
+            DR = SQLCmd.ExecuteReader
+            DR.Read()
+            Return DR.Item("nom_asamblea")
+            dbCon.Close()
+        Catch ex As Exception
+            MsgBox("19" & vbCrLf & ex.Message)
+        End Try
 
     End Function
 
-    Public Function Get_date_asamblea()
-        Dim dateA As String = ""
+    Public Function Get_code(n)
+        Dim code As String = ""
+        Dim dbCon As MySqlConnection
+        Dim strQuerry As String = ""
+        Dim SQLCmd As MySqlCommand
+        Dim DR As MySqlDataReader
 
-        Return dateA
+        Try
+            dbCon = New MySqlConnection("Server=localhost;Database=asambleas_db;Uid=root;Pwd=1234")
+            strQuerry = "SELECT nom_asamblea FROM asambleas_db.asambleas WHERE asambleas.n_asamblea = '" & n & "';"
+            SQLCmd = New MySqlCommand(strQuerry, dbCon)
+            ' OPEN the DB and Kickoff the Query
+            dbCon.Open()
+            DR = SQLCmd.ExecuteReader
+
+            Return DR.Item("nom_asamblea")
+
+            dbCon.Close()
+
+        Catch ex As Exception
+            MsgBox("18" & vbCrLf & ex.Message)
+        End Try
+
+
+
+        code = code & GL_PropID
+
+
+        Return code
 
     End Function
 
@@ -417,7 +501,7 @@ A:
             dbCon.Close()
 
         Catch ex As Exception
-            MsgBox("Failure to communicate!" & vbCrLf & ex.Message)
+            MsgBox("17" & vbCrLf & ex.Message)
         End Try
     End Sub
 
@@ -444,14 +528,61 @@ A:
             dbCon.Close()
 
         Catch ex As Exception
-            MsgBox("Failure to communicate! 2" & vbCrLf & ex.Message)
+            MsgBox("16" & vbCrLf & ex.Message)
         End Try
     End Sub
 
-    Public Function Get_data()
+    ' Obtiene el punto para desplegar en boleta
+    Public Function Get_Punto(n, a)
+        Dim dbCon As MySqlConnection
+        dbCon = New MySqlConnection("Server=localhost;Database=asambleas_db;Uid=root;Pwd=1234")
 
+        Dim strQuerry As String = ""
+        Dim SQLCmd As MySqlCommand
+        Dim DR As MySqlDataReader
+        Dim num As Integer = 0
+
+        Try
+            strQuerry = "SELECT id_int_punto FROM asambleas_db.puntos 
+                            WHERE puntos.num_punto = '" & n & "' 
+                            AND puntos.asamblea_id = 
+                            (SELECT id_asamblea FROM asambleas_db.asambleas WHERE asambleas.n_asamblea = '" & a & "');"
+            SQLCmd = New MySqlCommand(strQuerry, dbCon)
+            dbCon.Open()
+            DR = SQLCmd.ExecuteReader
+            DR.Read()
+            num = DR.Item("id_int_punto")
+            dbCon.Close()
+        Catch ex As Exception
+            MsgBox("15" & vbCrLf & ex.Message)
+        End Try
+        Return num
     End Function
 
+    'Obtiene el numero de propiedades
+    Public Function Get_prop_number()
+
+        Dim dbCon As MySqlConnection
+        Dim strQuerry As String = ""
+        Dim SQLCmd As MySqlCommand
+        Dim DR As MySqlDataReader
+        Dim n As Integer = 0
+        Try
+            dbCon = New MySqlConnection("Server=localhost;Database=asambleas_db;Uid=root;Pwd=1234")
+            strQuerry = "SELECT COUNT(*) FROM asambleas_db.propiedades WHERE propiedades.proyecto_id = " & G_Build_ID & ";"
+            SQLCmd = New MySqlCommand(strQuerry, dbCon)
+            Console.WriteLine(SQLCmd)
+            ' OPEN the DB and Kickoff the Query
+            dbCon.Open()
+            DR = SQLCmd.ExecuteReader
+            DR.Read()
+            n = DR.Item("COUNT(*)")
+            dbCon.Close()
+        Catch ex As Exception
+            MsgBox("14" & vbCrLf & ex.Message)
+        End Try
+        Return n
+    End Function
     'Crea asamblea para proyecto
     Public Function Crear_asamblea(name, dte)
 
@@ -472,7 +603,7 @@ A:
             dbCon.Close()
             Load_proyectos()
         Catch ex As Exception
-            MsgBox("Failure to communicate! 4...." & vbCrLf & ex.Message)
+            MsgBox("13" & vbCrLf & ex.Message)
         End Try
 
     End Function
@@ -503,10 +634,18 @@ A:
         Else
             Try
                 dbCon.Open()
-                strQuerry = "SELECT  asambleas.nom_asamblea AS 'Nombre Asamblea',
+                If AgregarAsamblea.Cbx_display.Checked Then
+                    strQuerry = "SELECT asambleas.nom_asamblea AS 'Nombre Asamblea',
                             asambleas.n_asamblea AS 'Identificador',
                             asambleas.fecha_asamblea AS 'Fecha'
-                            FROM asambleas_db.asambleas WHERE asambleas.proyecto_id = " & G_Build_ID & ";"
+                            FROM asambleas_db.asambleas WHERE asambleas.proyecto_id = " & G_Build_ID & " ORDER BY asambleas.fecha_asamblea, asambleas.nom_asamblea;"
+
+                Else
+                    strQuerry = "SELECT  CONCAT(SUBSTRING(asambleas.nom_asamblea, 1, 40),' ...') AS 'Nombre Asamblea',
+                            asambleas.n_asamblea AS 'Identificador',
+                            asambleas.fecha_asamblea AS 'Fecha'
+                            FROM asambleas_db.asambleas WHERE asambleas.proyecto_id = " & G_Build_ID & " ORDER BY asambleas.fecha_asamblea, asambleas.nom_asamblea;"
+                End If
                 SQLCmd = New MySqlCommand(strQuerry, dbCon)
                 SDA.SelectCommand = SQLCmd
                 SDA.Fill(dbDataSet)
@@ -515,7 +654,7 @@ A:
                 SDA.Update(dbDataSet)
                 dbCon.Close()
             Catch ex As Exception
-                MsgBox("Failure to communicate!" & vbCrLf & ex.Message)
+                MsgBox("12" & vbCrLf & ex.Message)
             End Try
         End If
     End Sub
@@ -549,7 +688,7 @@ A:
             dbCon.Close()
 
         Catch ex As Exception
-            MsgBox("Failure to communicate!" & vbCrLf & ex.Message)
+            MsgBox("11" & vbCrLf & ex.Message)
         End Try
 
     End Sub
@@ -588,10 +727,10 @@ A:
         Else
             Try
                 dbCon.Open()
-                strQuerry = "SELECT num_punto AS 'Punto de Asamblea'
+                strQuerry = "SELECT num_punto AS 'Punto de Asamblea' FROM asambleas_db.asambleas
 	                    JOIN asambleas_db.puntos 
 	                    ON asambleas.n_asamblea = '" & asamblea & "' AND puntos.asamblea_id = 
-		                    (SELECT id_asamblea FROM asambleas_db.asambleas WHERE n_asamblea = '" & asamblea & "');"
+		                    (SELECT id_asamblea FROM asambleas_db.asambleas WHERE n_asamblea = '" & asamblea & "') ORDER BY puntos.num_punto;"
                 SQLCmd = New MySqlCommand(strQuerry, dbCon)
                 SDA.SelectCommand = SQLCmd
                 SDA.Fill(dbDataSet)
@@ -600,7 +739,7 @@ A:
                 SDA.Update(dbDataSet)
                 dbCon.Close()
             Catch ex As Exception
-                MsgBox("Failure to communicate!" & vbCrLf & ex.Message)
+                MsgBox("10" & vbCrLf & ex.Message)
             End Try
         End If
     End Sub
@@ -646,10 +785,103 @@ A:
             dbCon.Close()
 
         Catch ex As Exception
-            MsgBox("Failure to communicate! 2" & vbCrLf & ex.Message)
+            MsgBox("9" & vbCrLf & ex.Message)
         End Try
 
 B:
     End Sub
 
+    Public Sub DisplayPuntos(n)
+        Dim dbCon As MySqlConnection
+        dbCon = New MySqlConnection("Server=localhost;Database=asambleas_db;Uid=root;Pwd=1234")
+        Dim LookFor As String = ""
+        Dim pass As Boolean = False
+        Dim cancel As Integer = 0
+
+        Dim strQuerry As String = ""
+        Dim SQLCmd As MySqlCommand
+        Dim DR As MySqlDataReader
+        Dim SDA As New MySqlDataAdapter
+        Dim dbDataSet As New DataTable
+        Dim bSource As New BindingSource
+
+        Try
+            strQuerry = "SELECT num_punto FROM asambleas_db.asambleas
+		                             JOIN asambleas_db.puntos
+                                     ON asambleas.id_asamblea = puntos.asamblea_id AND asambleas.n_asamblea = " & n & "' ORDER BY puntos.num_punto;"
+            SQLCmd = New MySqlCommand(strQuerry, dbCon)
+            dbCon.Open()
+            DR = SQLCmd.ExecuteReader
+
+            While DR.Read
+
+                AgregarAsamblea.cbx_Asambleas.Items.Add(DR.Item("num_punto"))
+
+            End While
+
+            dbCon.Close()
+        Catch ex As Exception
+            MsgBox("8" & vbCrLf & ex.Message)
+        End Try
+    End Sub
+
+    Public Sub LoadAsambleas(n)
+        Dim dbCon As MySqlConnection
+        dbCon = New MySqlConnection("Server=localhost;Database=asambleas_db;Uid=root;Pwd=1234")
+        Dim LookFor As String = ""
+        Dim pass As Boolean = False
+        Dim cancel As Integer = 0
+
+        Dim strQuerry As String = ""
+        Dim SQLCmd As MySqlCommand
+        Dim DR As MySqlDataReader
+        Dim SDA As New MySqlDataAdapter
+        Dim dbDataSet As New DataTable
+        Dim bSource As New BindingSource
+
+        Try
+            Form3.Cbx_Asambleas.Items.Clear()
+            Form3.Cbx_Asambleas.ResetText()
+
+            strQuerry = "SELECT n_asamblea FROM asambleas_db.asambleas WHERE fecha_asamblea = '" & n & "';"
+            SQLCmd = New MySqlCommand(strQuerry, dbCon)
+            dbCon.Open()
+            DR = SQLCmd.ExecuteReader
+
+            While DR.Read
+
+                Form3.Cbx_Asambleas.Items.Add(DR.Item("n_asamblea"))
+
+            End While
+
+            dbCon.Close()
+        Catch ex As Exception
+            MsgBox("7" & vbCrLf & ex.Message)
+        End Try
+    End Sub
+
+    Public Function Get_puntos_number(n)
+        Dim dbCon As MySqlConnection
+        Dim strQuerry As String = ""
+        Dim SQLCmd As MySqlCommand
+        Dim DR As MySqlDataReader
+        Try
+            dbCon = New MySqlConnection("Server=localhost;Database=asambleas_db;Uid=root;Pwd=1234")
+            strQuerry = "SELECT COUNT(*) FROM asambleas_db.puntos
+			        JOIN asambleas_db.asambleas
+		            ON asambleas.id_asamblea = puntos.asamblea_id AND asambleas.n_asamblea = '" & n & "';"
+            SQLCmd = New MySqlCommand(strQuerry, dbCon)
+            Console.WriteLine(SQLCmd)
+            ' OPEN the DB and Kickoff the Query
+            dbCon.Open()
+            DR = SQLCmd.ExecuteReader
+            DR.Read()
+            n = DR.Item("COUNT(*)")
+            dbCon.Close()
+        Catch ex As Exception
+            MsgBox("6" & vbCrLf & ex.Message)
+        End Try
+        Return n
+
+    End Function
 End Module

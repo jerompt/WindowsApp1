@@ -53,25 +53,6 @@ Public Class Form1
                     nombre = ""
                     indiviso = ""
                     Prop_id = ""
-                    sLine = readFile.ReadLine
-                    If sLine Is Nothing Then Exit Do
-                    Dim words() As String = sLine.Split(",")
-                    dgvAsistencia.Rows.Add("")
-                    For i As Integer = 0 To 3
-                        If i = 0 Then
-                            depto = words(i)
-
-                        ElseIf i = 1 Then
-                            torre = words(i)
-
-                        ElseIf i = 2 Then
-                            nombre = words(i)
-
-                        ElseIf i = 3 Then
-                            indiviso = words(i)
-
-                        End If
-                    Next
                     Prop_id = gen_ids(2, ProyId)
                     Try
                         strQuerry = "INSERT INTO asambleas_db.propiedades (proyecto_id,n_propiedad,nom_propietario,torre,depto,indiviso) 
@@ -102,31 +83,23 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        'TODO: This line of code loads data into the 'Asambleas_dbDataSet.propiedades' table. You can move, or remove it, as needed.
-        Me.PropiedadesTableAdapter.Fill(Me.Asambleas_dbDataSet.propiedades)
-        'TODO: This line of code loads data into the 'Asambleas_dbDataSet.proyectos' table. You can move, or remove it, as needed.
-        Me.ProyectosTableAdapter.Fill(Me.Asambleas_dbDataSet.proyectos)
+        AgregarAsamblea.Hide()
         Form2.Hide()
         AddBuilding(G_Build_ID)
         'Get_data()
-
     End Sub
 
 
     Private Sub btnGenerarCodigos_Click(sender As Object, e As EventArgs) Handles btnGenerarCodigos.Click
-
         Form3.Show()
         Me.Hide()
-
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs)
 
-
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs)
-
 
     End Sub
 

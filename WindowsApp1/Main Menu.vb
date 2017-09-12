@@ -7,7 +7,6 @@ Public Class Form2
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Load_proyectos()
 
-
     End Sub
 
     Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
@@ -15,7 +14,6 @@ Public Class Form2
     End Sub
 
     Private Sub btnCargarProyecto_Click(sender As Object, e As EventArgs) Handles btnCargarProyecto.Click
-
 
         Dim proyecto As String
         Dim LookFor As String = ""
@@ -31,9 +29,8 @@ Public Class Form2
 
         Try
             dbCon = New MySqlConnection("Server=localhost;Database=asambleas_db;Uid=root;Pwd=1234")
-            strQuerry = "SELECT proyectos.id_proyecto FROM asambleas_db.proyectos WHERE proyectos.nom_proyecto = '" & proyecto & "';"
+            strQuerry = "SELECT proyectos.id_proyecto FROM asambleas_db.proyectos WHERE proyectos.nom_proyecto = '" & proyecto & "' ORDER BY proyectos.nom_proyecto;"
             SQLCmd = New MySqlCommand(strQuerry, dbCon)
-            ' OPEN the DB and Kickoff the Query
             dbCon.Open()
             DR = SQLCmd.ExecuteReader
             DR.Read()
@@ -50,9 +47,7 @@ Public Class Form2
 
         If pass Then
             Form1.Show()
-            Me.Hide()
         End If
-        ' Console.WriteLine(LookFor)
 A:
     End Sub
 

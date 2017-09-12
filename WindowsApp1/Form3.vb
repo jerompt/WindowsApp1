@@ -1,20 +1,17 @@
 ﻿Imports System
 Imports System.IO
 Imports System.Text
+Imports MySql.Data
 Imports MySql.Data.MySqlClient
-
 Imports MessagingToolkit.Barcode
-
-
 
 Public Class Form3
     'Dim ServerString As String = "Server=localhost;User Id=root;Password=1234;Database=asambleas"
-    'Dim img As Image = Image.FromFile("C:\Users\Jerónimo\hubiC\Asambleas\Boleta-de-Votacion-Nueva.jpg")
     Dim b As New Drawing.Bitmap(2200, 1700)
     Dim gr As Graphics = Graphics.FromImage(b)
 
     ' Open Building logo
-    Dim img As Image = Image.FromFile("D:\hubiC\Asambleas\logos\" & G_BuildingName & ".jpg")
+    Dim img As Image = Image.FromFile("D:\hubiC\Asambleas\logos\" & G_Build_ID & ".jpg")
     Dim Icob As Image = Image.FromFile("D:\hubiC\Asambleas\logos\MarcaDeAguaCobalto.png")
     Dim IFormat As Image = Image.FromFile("D:\hubiC\Asambleas\logos\formato.jpg")
 
@@ -31,16 +28,20 @@ Public Class Form3
     Dim drawFormat As New StringFormat
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnGenerate.Click
-        '
-        ' N EEE III A PPPP V
-        ' N = numero
-        ' EEE = Edificio
-        ' III = ID de Propiedad
-        ' A = Asamblea
-        ' PPPP = Punto a Votar
-        ' V = Valor del Voto
 
-        'Dim barcodeEncoder As New BarcodeEncoder()
+        Dim cantPuntos As Integer = 0
+        Dim counter As Integer = 0
+        Dim code_asamblea As String = ""
+        Dim code_propiedad As String = ""
+        Dim code_punto As String = ""
+        Dim fecha_asamblea As String = ""
+        Dim nom_asamblea As String = ""
+        Dim nom_punto As String = ""
+        Dim CodeCompLetras As String = ""
+
+        Dim f As Integer = 1
+        Dim c As Integer = 2
+
         Dim b As New Drawing.Bitmap(2200, 1700)
         Dim gr As Graphics = Graphics.FromImage(b)
         Dim name As String = ""
@@ -60,10 +61,9 @@ Public Class Form3
         Dim num1 As Integer = 1
         Dim marco As Integer = 65
         Dim formato As String = "FO-AD-113"
-        Dim fecha As String = "06/09/2017"
 
-        My.Computer.FileSystem.CreateDirectory("D:\hubiC\Asambleas\" & G_BuildingName)
-        My.Computer.FileSystem.CreateDirectory("D:\hubiC\Asambleas\" & G_BuildingName & "\CodigosGenerados")
+        My.Computer.FileSystem.CreateDirectory("D:\hubiC\Asambleas\" & G_Build_ID)
+        My.Computer.FileSystem.CreateDirectory("D:\hubiC\Asambleas\" & G_Build_ID & "\CodigosGenerados")
 
         Dim temp As String = ""
         Dim sLine As String = ""
@@ -73,110 +73,70 @@ Public Class Form3
         Dim loc As Integer = 145 * 2.77
         Dim loc2 As Integer = 100 * 2.77
         Dim bitmp As Bitmap
-        Dim punto As String
-
         Dim drawRect1 As New RectangleF(mLad, mLet * 9.5, wBoleta, hBoleta)
         Dim drawRect2 As New RectangleF(mLad, mLet * 13.5, wBoleta, hBoleta)
         Dim strFormat As New StringFormat()
         strFormat.Alignment = StringAlignment.Center
         Dim strFormat2 As New StringFormat()
         strFormat2.Alignment = StringAlignment.Far
-
         Dim L_Puntos As New List(Of String)
-
-
         Dim codeW As Integer = 500
-        'strFormat.LineAlignment = StringAlignment.Center
+        Dim cantProp As Integer = 0
 
-        ' Create or overwrite the file.
-        Dim fileWrt As System.IO.StreamWriter
-        'Dim fileRd As System.IO.StreamReader
-
-        If My.Computer.FileSystem.FileExists("D:\hubiC\Asambleas" & G_BuildingName & ".txt") Then
-
-        Else
-            fileWrt = My.Computer.FileSystem.OpenTextFileWriter("D:\hubiC\Asambleas" & G_BuildingName & ".txt", True)
-            fileWrt.WriteLine("Here is the first string.")
-            fileWrt.Close()
-        End If
-
-        Try
-
-        Catch ex As Exception
-
-        End Try
-
-        ' Leer Nombre de Asamblea
-        G_NAsamblea = tbx_Asamblea.Text
         G_NumAsa += 1
-        tbx_Asamblea.Clear()
-
-        ' Leer Linea de Puntos de Asamblea
-        sLine = txtbxOrdinaria.Text
-
-        Dim words() As String = sLine.Split(",")
-        txtbxOrdinaria.Clear()
-
-        For i = 0 To words.Count - 1
-            L_Puntos.Add(words(i))
-        Next
-
-        Do
-
-            If CountA = words.Count Then Exit Do
-
-            If words(CountA).Contains(".") Then
-                sLine2 = words(CountA)
-                Dim subWords() As String = sLine2.Split(".")
-
-                If subWords(0).Count = 2 And subWords(1).Count = 2 Then ' Revisa si ambos lados tienen 2 digito
-                    G_AsambleaPuntos.Add(subWords(0) & subWords(1))
-
-                ElseIf subWords(0).Count = 1 And subWords(1).Count = 2 Then ' Si Lado izquierdo tiene 1 digito y lado derecho 2
-                    G_AsambleaPuntos.Add("0" & subWords(0) & subWords(1))
-
-                ElseIf subWords(0).Count = 2 And subWords(1).Count = 1 Then ' Si Lado izquierdo tiene 2 digito y lado derecho 1
-                    G_AsambleaPuntos.Add(subWords(0) & "0" & subWords(1))
-
-                ElseIf subWords(0).Count = 1 And subWords(1).Count = 1 Then ' Revisa si ambos lados tienen 1 digito
-                    G_AsambleaPuntos.Add("0" & subWords(0) & "0" & subWords(1))
-
-                End If
-
-            ElseIf words(CountA).Count = 1 Then
-                G_AsambleaPuntos.Add("0" & words(CountA) & "00")
-
-            ElseIf words(CountA).Count = 2 Then
-                G_AsambleaPuntos.Add(words(CountA) & "00")
-
-            End If
-            CountA += 1
-
-        Loop
-        ' Dim imge As Image = Image.FromFile("D:\hubiC\Asambleas\Boleta.jpg")
 
         Dim Generator As New MessagingToolkit.Barcode.BarcodeEncoder
         Generator.LabelPosition = LabelPositions.BottomCenter
         Generator.CustomLabel = ""
         Generator.Width = 400 * 2.77
         Generator.Height = 100 * 2.77
-        Dim date1 As String = "06/09/2017"
-        Dim id_asamblea As String = gen_ids(3, G_Build_ID)
-        ' Dim id_propiedad As String = Get_idDepto()
-        ' Dim id_punto As Integer = Get_idPunto()
 
-        ' Empezar a generar codigos de Barras
-        For j As Integer = 0 To (G_AsambleaPuntos.Count - 1)
-            punto = LimpiarPunto(j)
+        'ID ASAMBLEA CODIGOS DE BARRAS
+        ' AAAA AA ## #
+        ' AAAA = ID ASAMBLEA
+        ' AA = ID PROPIEDAD
+        ' ## = ID interno Punto
+        ' # = voto
+        Console.WriteLine("Buscando fecha de asamblea")
+        MsgBox("buscando datos...")
+        fecha_asamblea = Cbx_fechaAsamblea.SelectedItem
+        Console.WriteLine("Buscando Codigo de asamblea")
+        code_asamblea = Cbx_Asambleas.SelectedItem
+        Console.WriteLine("Buscando Nombre de asamblea")
+        nom_asamblea = Get_nom_asamblea(code_asamblea)
+        Console.WriteLine("Buscando Cantidad de PRopiedades de asamblea")
+        cantProp = Get_prop_number()
+        Console.WriteLine("Buscando cantidad de puntos de asamblea")
+        cantPuntos = Get_puntos_number(code_asamblea)
 
-            For i As Integer = 0 To (G_PropiedadID.Count - 1)
+        ' Pendiente Solo imprimir un punto!!
+        'DisplayPuntos(Cbx_Asambleas.Text)
+
+        For j As Integer = 1 To (cantPuntos - 1)
+
+            Console.WriteLine("Buscando Nombre de Punto")
+            nom_punto = Get_nom_punto(j - 1)
+            Console.WriteLine("Codigo de Punto")
+            code_punto = Get_Punto(nom_punto, code_asamblea)
+            Console.WriteLine("Limpiando Punto")
+            code_punto = LimpiarPunto(code_punto)
+            Console.WriteLine("Generando Codigo")
+
+
+            For i As Integer = 1 To (cantProp - 1)
                 Try
                     If i Mod 4 = 0 Then
+                        Console.WriteLine("Imprimiendo Boleta 1 ")
+                        Get_PropInfo(i)
+                        GenCode = code_asamblea & GL_PropID & code_punto
+                        CodeCompLetras = code_asamblea & "-" & GL_PropID & "-" & code_punto & "-"
+
+                        count2 += 1
+
                         gr.Clear(Color.White)
                         gr.FillRectangle(Brushes.White, 0, 0, b.Width, b.Height) ' Pintar de blanco el Fondo de la imagen
 
-                        count2 += 1
-                        GenCode = id_asamblea & G_PropiedadID(i) & "Punto" & G_AsambleaPuntos(i) & G_AsambleaPuntos(j) 'Generando Codigo Base
+                        GenCode = code_asamblea & code_propiedad & code_punto 'Generando Codigo Base
 
                         ' pintar primera boleta
                         ' Pintar imagen de votacion
@@ -193,39 +153,45 @@ Public Class Form3
                                      mSup + mLet, loc, Convert.ToSingle(loc * img.Height / img.Width)) ' Dibujando imagen boleta 1
 
                         gr.DrawImage(IFormat, mLad + wBoleta - 50, mSup + 25)
-                        gr.DrawString(fecha, drawFontTer, drawBrush, mLad + 100, mSup + 20, strFormat)
+                        gr.DrawString(fecha_asamblea, drawFontTer, drawBrush, mLad + 100, mSup + 20, strFormat)
 
                         'Pintar el nombre de la asamblea 
-                        gr.DrawString(G_NAsamblea, drawFontMain, drawBrush, New RectangleF(mLad, mLet * 9.5, wBoleta, hBoleta), strFormat)
+                        gr.DrawString(nom_asamblea, drawFontMain, drawBrush, New RectangleF(mLad, mLet * 9.5, wBoleta, hBoleta), strFormat)
                         'Pintar el punto a votar
-                        gr.DrawString("Punto " & G_AsambleaPuntos(i), drawFontMain, drawBrush, drawRect2, strFormat)
+                        gr.DrawString("Punto " & nom_punto, drawFontMain, drawBrush, drawRect2, strFormat)
                         'Pintar el Numero de propiedad e indiviso
-                        gr.DrawString(GetTorreYDepa(i) & "   " & G_Indiviso(i) & "% Indiviso",
+                        gr.DrawString(GetTorreYDepa() & "   " & GL_indiviso & "% Indiviso",
                                       drawFontSec, drawBrush, New RectangleF(mLad, mLet * 15.5, wBoleta, hBoleta), strFormat)
 
                         'Generar codigo de barras a Favor
-                        bitmp = New Bitmap(Generator.Encode(MessagingToolkit.Barcode.BarcodeFormat.Code128, GenCode & "1"))
-                        bitmp.Save("D:\hubiC\Asambleas\" & G_BuildingName & "\CodigosGenerados\" & GenCode & "1.png", System.Drawing.Imaging.ImageFormat.Png)
+                        bitmp = New Bitmap(Generator.Encode(MessagingToolkit.Barcode.BarcodeFormat.Code128B, GenCode & f))
+
+                        bitmp.Save("D:\hubiC\Asambleas\" & G_Build_ID & "\CodigosGenerados\" & GenCode & f & ".png", System.Drawing.Imaging.ImageFormat.Png)
                         ' Pintar Codigo de barras A Favor
                         'gr.DrawImage()
                         gr.DrawImage(bitmp, Convert.ToSingle(mLad + wBoleta / 4 - codeW / 2), mSup + hBoleta - Convert.ToSingle(marco * 2.77),
                                          codeW, Convert.ToSingle((bitmp.Height * codeW) / bitmp.Width) - altoCode)
-                        gr.DrawString(GenCode & "1", drawFontTer, drawBrush, New RectangleF(Convert.ToSingle(mLad + wBoleta / 4 - codeW / 2), mSup + hBoleta - 23 * 2.77,
+                        gr.DrawString(CodeCompLetras & f, drawFontTer, drawBrush, New RectangleF(Convert.ToSingle(mLad + wBoleta / 4 - codeW / 2), mSup + hBoleta - 23 * 2.77,
                                                                                             codeW, Convert.ToSingle(codeW * bitmp.Height / bitmp.Width)), strFormat) 'Pintar codigo en letras y numeros
 
                         'Busca Codigo de Brras en contra
-                        bitmp = New Bitmap(Generator.Encode(MessagingToolkit.Barcode.BarcodeFormat.Code128, GenCode & "2"))
-                        bitmp.Save("D:\hubiC\Asambleas\" & G_BuildingName & "\CodigosGenerados\" & GenCode & "2.png", System.Drawing.Imaging.ImageFormat.Png)
+                        bitmp = New Bitmap(Generator.Encode(MessagingToolkit.Barcode.BarcodeFormat.Code128B, GenCode & c))
+                        bitmp.Save("D:\hubiC\Asambleas\" & G_Build_ID & "\CodigosGenerados\" & GenCode & c & ".png", System.Drawing.Imaging.ImageFormat.Png)
                         ' Pintar Letras de Codigo En Contra
                         gr.DrawImage(bitmp, Convert.ToSingle(mLad + wBoleta * 0.75 - codeW / 2), mSup + hBoleta - Convert.ToSingle(marco * 2.77),
                                          codeW, Convert.ToSingle((bitmp.Height * codeW) / bitmp.Width) - altoCode)
-                        gr.DrawString(GenCode & "2", drawFontTer, drawBrush, New RectangleF((mLad + (wBoleta * 0.75) - (codeW / 2)),
+                        gr.DrawString(CodeCompLetras & c, drawFontTer, drawBrush, New RectangleF((mLad + (wBoleta * 0.75) - (codeW / 2)),
                                                                                              mSup + hBoleta - 23 * 2.77, codeW, Convert.ToSingle(codeW * bitmp.Height / bitmp.Width)), strFormat) 'Pintar codigo en letras y numeros
 
 
                     ElseIf i Mod 4 = 1 Then
+                        Console.WriteLine("Imprimiendo Boleta 2 ")
+                        Get_PropInfo(i)
+                        GenCode = code_asamblea & GL_PropID & code_punto
+                        CodeCompLetras = code_asamblea & "-" & GL_PropID & "-" & code_punto & "-"
+
                         count2 += 1
-                        GenCode = num1 & G_BuildingName & G_PropiedadID(i) & G_NumAsa & G_AsambleaPuntos(j) 'Generando Codigo Base
+
                         'Pintar segunda boleta
                         ' Pintar imagen de votacion
                         img2 = Bitmap.FromFile("D:\hubiC\Asambleas\Votacion.jpg")
@@ -244,36 +210,41 @@ Public Class Form3
 
                         gr.DrawImage(IFormat, mLad + wBoleta + mVert + wBoleta - 50, mSup + 25)
 
-                        gr.DrawString(fecha, drawFontTer, drawBrush, mLad + wBoleta + mVert + 100, mSup + 20, strFormat)
+                        gr.DrawString(fecha_asamblea, drawFontTer, drawBrush, mLad + wBoleta + mVert + 100, mSup + 20, strFormat)
 
-                        gr.DrawString(G_NAsamblea, drawFontMain, drawBrush, New RectangleF(mLad + wBoleta + mVert, mLet * 9.5, wBoleta, hBoleta), strFormat)
-                        gr.DrawString("Punto " & G_AsambleaPuntos(i), drawFontMain, drawBrush, New RectangleF(mLad + wBoleta + mVert, mLet * 13.5, wBoleta, hBoleta), strFormat)
-                        gr.DrawString(GetTorreYDepa(i) & "   " & G_Indiviso(i) & "% Indiviso",
+                        gr.DrawString(nom_asamblea, drawFontMain, drawBrush, New RectangleF(mLad + wBoleta + mVert, mLet * 9.5, wBoleta, hBoleta), strFormat)
+                        gr.DrawString("Punto " & nom_punto, drawFontMain, drawBrush, New RectangleF(mLad + wBoleta + mVert, mLet * 13.5, wBoleta, hBoleta), strFormat)
+                        gr.DrawString(GetTorreYDepa() & "   " & GL_indiviso & "% Indiviso",
                                       drawFontSec, drawBrush, New RectangleF(mLad + wBoleta + mVert, mLet * 15.5, wBoleta, hBoleta), strFormat)
 
 
                         'Crear Codigo de Barras a Favor
-                        bitmp = New Bitmap(Generator.Encode(MessagingToolkit.Barcode.BarcodeFormat.Code128, GenCode & "1"))
-                        bitmp.Save("D:\hubiC\Asambleas\" & G_BuildingName & "\CodigosGenerados\" & GenCode & "1.png", System.Drawing.Imaging.ImageFormat.Png)
+                        bitmp = New Bitmap(Generator.Encode(MessagingToolkit.Barcode.BarcodeFormat.Code128B, GenCode & f))
+                        bitmp.Save("D:\hubiC\Asambleas\" & G_Build_ID & "\CodigosGenerados\" & GenCode & f & ".png", System.Drawing.Imaging.ImageFormat.Png)
 
                         gr.DrawImage(bitmp, Convert.ToSingle(mLad + wBoleta / 4 - codeW / 2) + wBoleta + mVert, mSup + hBoleta - Convert.ToSingle(marco * 2.77),
                                          codeW, Convert.ToSingle((bitmp.Height * codeW) / bitmp.Width) - altoCode)
-                        gr.DrawString(GenCode & "1", drawFontTer, drawBrush, New RectangleF(Convert.ToSingle(mLad + wBoleta / 4 - codeW / 2) + wBoleta + mVert,
+                        gr.DrawString(CodeCompLetras & f, drawFontTer, drawBrush, New RectangleF(Convert.ToSingle(mLad + wBoleta / 4 - codeW / 2) + wBoleta + mVert,
                                                                                             mSup + hBoleta - 23 * 2.77, codeW, Convert.ToSingle(codeW * bitmp.Height / bitmp.Width)), strFormat) 'Pintar codigo en letras y numeros                                                 
 
 
                         'Generar codigo de barras En Contra
-                        bitmp = New Bitmap(Generator.Encode(MessagingToolkit.Barcode.BarcodeFormat.Code128, GenCode & "2"))
-                        bitmp.Save("D:\hubiC\Asambleas\" & G_BuildingName & "\CodigosGenerados\" & GenCode & "2.png", System.Drawing.Imaging.ImageFormat.Png)
+                        bitmp = New Bitmap(Generator.Encode(MessagingToolkit.Barcode.BarcodeFormat.Code128B, GenCode & c))
+                        bitmp.Save("D:\hubiC\Asambleas\" & G_Build_ID & "\CodigosGenerados\" & GenCode & c & ".png", System.Drawing.Imaging.ImageFormat.Png)
                         gr.DrawImage(bitmp, Convert.ToSingle(mLad + wBoleta * 0.75 - codeW / 2) + wBoleta + mVert, mSup + hBoleta - Convert.ToSingle(marco * 2.77),
                                          codeW, Convert.ToSingle((bitmp.Height * codeW) / bitmp.Width) - altoCode)
-                        gr.DrawString(GenCode & "2", drawFontTer, drawBrush, New RectangleF((mLad + (wBoleta * 0.75) - (codeW / 2) + wBoleta + mVert),
+                        gr.DrawString(CodeCompLetras & c, drawFontTer, drawBrush, New RectangleF((mLad + (wBoleta * 0.75) - (codeW / 2) + wBoleta + mVert),
                                                                                              mSup + hBoleta - 23 * 2.77, codeW, Convert.ToSingle(codeW * bitmp.Height / bitmp.Width)), strFormat) 'Pintar codigo en letras y numeros                                                 
 
 
                     ElseIf i Mod 4 = 2 Then
+                        Console.WriteLine("Imprimiendo Boleta 3")
+                        Get_PropInfo(i)
+                        GenCode = code_asamblea & GL_PropID & code_punto
+                        CodeCompLetras = code_asamblea & "-" & GL_PropID & "-" & code_punto & "-"
+
                         count2 += 1
-                        GenCode = num1 & G_BuildingName & G_PropiedadID(i) & G_NumAsa & G_AsambleaPuntos(j) 'Generando Codigo Base
+
                         'Pintar tercera boleta
                         img2 = Bitmap.FromFile("D:\hubiC\Asambleas\Votacion.jpg")
                         gr.DrawImage(img2, mLad, Convert.ToSingle(((wBoleta / 9) * 4) - 15) + mSup + hBoleta + mHor, wBoleta, img2.Height)
@@ -290,37 +261,40 @@ Public Class Form3
                                  Convert.ToSingle(loc * img.Height / img.Width)) ' Dibujando imagen boleta 3
 
                         gr.DrawImage(IFormat, mLad + wBoleta - 50, mSup + hBoleta + mHor + 25)
-                        gr.DrawString(fecha, drawFontTer, drawBrush, mLad + 100, mSup + hBoleta + mHor + 20, strFormat)
+                        gr.DrawString(fecha_asamblea, drawFontTer, drawBrush, mLad + 100, mSup + hBoleta + mHor + 20, strFormat)
 
-                        gr.DrawString(G_NAsamblea, drawFontMain, drawBrush, New RectangleF(mLad, mLet * 9.5 + hBoleta + mHor, wBoleta, hBoleta), strFormat)
-                        gr.DrawString("Punto " & G_AsambleaPuntos(i), drawFontMain, drawBrush, New RectangleF(mLad, mLet * 13.5 + hBoleta + mHor, wBoleta, hBoleta), strFormat)
+                        gr.DrawString(nom_asamblea, drawFontMain, drawBrush, New RectangleF(mLad, mLet * 9.5 + hBoleta + mHor, wBoleta, hBoleta), strFormat)
+                        gr.DrawString("Punto " & nom_punto, drawFontMain, drawBrush, New RectangleF(mLad, mLet * 13.5 + hBoleta + mHor, wBoleta, hBoleta), strFormat)
 
-                        gr.DrawString(GetTorreYDepa(i) & "   " & G_Indiviso(i) & "% Indiviso",
+                        gr.DrawString(GetTorreYDepa() & "   " & GL_indiviso & "% Indiviso",
                                       drawFontSec, drawBrush, New RectangleF(mLad, mLet * 15.5 + hBoleta + mHor, wBoleta, hBoleta), strFormat)
 
-
                         'Generar codigo de barras a Favor
-                        bitmp = New Bitmap(Generator.Encode(MessagingToolkit.Barcode.BarcodeFormat.Code128, GenCode & "1"))
-                        bitmp.Save("D:\hubiC\Asambleas\" & G_BuildingName & "\CodigosGenerados\" & GenCode & "1.png", System.Drawing.Imaging.ImageFormat.Png)
+                        bitmp = New Bitmap(Generator.Encode(MessagingToolkit.Barcode.BarcodeFormat.Code128B, GenCode & f))
+                        bitmp.Save("D:\hubiC\Asambleas\" & G_Build_ID & "\CodigosGenerados\" & GenCode & f & ".png", System.Drawing.Imaging.ImageFormat.Png)
                         gr.DrawImage(bitmp, Convert.ToSingle(mLad + wBoleta / 4 - codeW / 2), mSup + hBoleta - Convert.ToSingle(marco * 2.77) + hBoleta + mVert,
                                          codeW, Convert.ToSingle((bitmp.Height * codeW) / bitmp.Width - altoCode))
-                        gr.DrawString(GenCode & "1", drawFontTer, drawBrush, New RectangleF(Convert.ToSingle(mLad + wBoleta / 4 - codeW / 2),
+                        gr.DrawString(CodeCompLetras & f, drawFontTer, drawBrush, New RectangleF(Convert.ToSingle(mLad + wBoleta / 4 - codeW / 2),
                         mSup + hBoleta - 23 * 2.77 + hBoleta + mVert, codeW, Convert.ToSingle((bitmp.Height * codeW) / bitmp.Width)), strFormat) 'Pintar codigo en letras y numeros
 
 
-
                         'Generar codigo de barras  En contra
-                        bitmp = New Bitmap(Generator.Encode(MessagingToolkit.Barcode.BarcodeFormat.Code128, GenCode & "2"))
-                        bitmp.Save("D:\hubiC\Asambleas\" & G_BuildingName & "\CodigosGenerados\" & GenCode & "2.png", System.Drawing.Imaging.ImageFormat.Png)
+                        bitmp = New Bitmap(Generator.Encode(MessagingToolkit.Barcode.BarcodeFormat.Code128B, GenCode & c))
+                        bitmp.Save("D:\hubiC\Asambleas\" & G_Build_ID & "\CodigosGenerados\" & GenCode & c & ".png", System.Drawing.Imaging.ImageFormat.Png)
                         gr.DrawImage(bitmp, Convert.ToSingle(mLad + wBoleta * 0.75 - codeW / 2), mSup + hBoleta - Convert.ToSingle(marco * 2.77) + hBoleta + mVert,
                                          codeW, Convert.ToSingle((bitmp.Height * codeW) / bitmp.Width) - altoCode)
-                        gr.DrawString(GenCode & "2", drawFontTer, drawBrush, New RectangleF((mLad + (wBoleta * 0.75) - (codeW / 2)),
+                        gr.DrawString(CodeCompLetras & c, drawFontTer, drawBrush, New RectangleF((mLad + (wBoleta * 0.75) - (codeW / 2)),
                                                                                             mSup + hBoleta - 23 * 2.77 + hBoleta + mVert, codeW, Convert.ToSingle((bitmp.Height * codeW) / bitmp.Width)), strFormat) 'Pintar codigo en letras y numeros
 
 
                     ElseIf i Mod 4 = 3 Then
+                        Console.WriteLine("Imprimiendo Boleta 4")
+                        Get_PropInfo(i)
+                        GenCode = code_asamblea & GL_PropID & code_punto
+                        CodeCompLetras = code_asamblea & "-" & GL_PropID & "-" & code_punto & "-"
+
                         count2 += 1
-                        GenCode = num1 & G_BuildingName & G_PropiedadID(i) & G_NumAsa & G_AsambleaPuntos(j) 'Generando Codigo Base
+
                         'Pintar cuarta boleta
                         img2 = Bitmap.FromFile("D:\hubiC\Asambleas\Votacion.jpg")
                         gr.DrawImage(img2, mLad + wBoleta + mVert, Convert.ToSingle(((wBoleta / 9) * 4) - 15) + mSup + hBoleta + mHor, wBoleta, img2.Height)
@@ -338,43 +312,43 @@ Public Class Form3
                                      Convert.ToSingle(loc * img.Height / img.Width)) ' Dibujando imagen boleta 4
 
                         gr.DrawImage(IFormat, mLad + wBoleta + mVert + wBoleta - 50, mSup + hBoleta + mHor + 25)
-                        gr.DrawString(fecha, drawFontTer, drawBrush, mLad + wBoleta + mVert + 100, mSup + hBoleta + mHor + 20, strFormat)
+                        gr.DrawString(fecha_asamblea, drawFontTer, drawBrush, mLad + wBoleta + mVert + 100, mSup + hBoleta + mHor + 20, strFormat)
 
-                        gr.DrawString(G_NAsamblea, drawFontMain, drawBrush, New RectangleF(mLad + wBoleta + mVert, mLet * 9.5 + hBoleta + mHor, wBoleta, hBoleta), strFormat)
-                        gr.DrawString("Punto " & G_AsambleaPuntos(i), drawFontMain, drawBrush, New RectangleF(mLad + wBoleta + mVert, mLet * 13.5 + hBoleta + mHor, wBoleta, hBoleta), strFormat)
-                        gr.DrawString(GetTorreYDepa(i) & "   " & G_Indiviso(i) & "% Indiviso",
+                        gr.DrawString(nom_asamblea, drawFontMain, drawBrush, New RectangleF(mLad + wBoleta + mVert, mLet * 9.5 + hBoleta + mHor, wBoleta, hBoleta), strFormat)
+                        gr.DrawString("Punto " & nom_punto, drawFontMain, drawBrush, New RectangleF(mLad + wBoleta + mVert, mLet * 13.5 + hBoleta + mHor, wBoleta, hBoleta), strFormat)
+                        gr.DrawString(GetTorreYDepa() & "   " & GL_indiviso & "% Indiviso",
                                       drawFontSec, drawBrush, New RectangleF(mLad + wBoleta + mVert, mLet * 15.5 + hBoleta + mHor, wBoleta, hBoleta), strFormat)
 
-                        bitmp = New Bitmap(Generator.Encode(MessagingToolkit.Barcode.BarcodeFormat.Code128, GenCode & "1"))
-                        bitmp.Save("D:\hubiC\Asambleas\" & G_BuildingName & "\CodigosGenerados\" & GenCode & "1.png", System.Drawing.Imaging.ImageFormat.Png)
+                        bitmp = New Bitmap(Generator.Encode(MessagingToolkit.Barcode.BarcodeFormat.Code128B, GenCode & f))
+                        bitmp.Save("D:\hubiC\Asambleas\" & G_Build_ID & "\CodigosGenerados\" & GenCode & f & ".png", System.Drawing.Imaging.ImageFormat.Png)
                         ' Pintar Codigo de barras A Favor
                         gr.DrawImage(bitmp, Convert.ToSingle(mLad + wBoleta / 4 - codeW / 2) + wBoleta + mVert, mSup + hBoleta - Convert.ToSingle(marco * 2.77) + hBoleta + mVert,
                                          codeW, Convert.ToSingle((bitmp.Height * codeW) / bitmp.Width) - altoCode)
                         ' Pintar Letras de Codigo A Favor
-                        gr.DrawString(GenCode & "1", drawFontTer, drawBrush, New RectangleF(Convert.ToSingle(mLad + wBoleta / 4 - codeW / 2) + wBoleta + mVert,
+                        gr.DrawString(CodeCompLetras & f, drawFontTer, drawBrush, New RectangleF(Convert.ToSingle(mLad + wBoleta / 4 - codeW / 2) + wBoleta + mVert,
                                                                                             mSup + hBoleta - 23 * 2.77 + hBoleta + mVert, codeW, Convert.ToSingle((bitmp.Height * codeW) / bitmp.Width)), strFormat) 'Pintar codigo en letras y numeros                                                 
 
 
                         'Generar codigo de barras En Contra
-                        bitmp = New Bitmap(Generator.Encode(MessagingToolkit.Barcode.BarcodeFormat.Code128, GenCode & "2"))
-                        bitmp.Save("D:\hubiC\Asambleas\" & G_BuildingName & "\CodigosGenerados\" & GenCode & "2.png", System.Drawing.Imaging.ImageFormat.Png)
+                        bitmp = New Bitmap(Generator.Encode(MessagingToolkit.Barcode.BarcodeFormat.Code128B, GenCode & c))
+                        bitmp.Save("D:\hubiC\Asambleas\" & G_Build_ID & "\CodigosGenerados\" & GenCode & c & ".png", System.Drawing.Imaging.ImageFormat.Png)
                         gr.DrawImage(bitmp, Convert.ToSingle(mLad + wBoleta * 0.75 - codeW / 2) + wBoleta + mVert, mSup + hBoleta - Convert.ToSingle(marco * 2.77) + hBoleta + mVert,
                                          codeW, Convert.ToSingle((bitmp.Height * codeW) / bitmp.Width) - altoCode)
-                        gr.DrawString(GenCode & "2", drawFontTer, drawBrush, New RectangleF(Convert.ToSingle(mLad + wBoleta * 0.75 - codeW / 2) + wBoleta + mVert,
+                        gr.DrawString(CodeCompLetras & c, drawFontTer, drawBrush, New RectangleF(Convert.ToSingle(mLad + wBoleta * 0.75 - codeW / 2) + wBoleta + mVert,
                                                                                              mSup + hBoleta - 23 * 2.77 + hBoleta + mVert, codeW, Convert.ToSingle((bitmp.Height * codeW) / bitmp.Width)), strFormat) 'Pintar codigo en letras y numeros                                                 
 
                     End If
 
-                    If count2 = 4 Or i = (G_PropiedadID.Count - 1) Then
+                    If count2 = 4 Or i = cantProp - 1 Then
 
                         hoja += 1
-                        b.Save("D:\hubiC\Asambleas\" & G_BuildingName & "\" & G_BuildingName & " Asamblea " & "2" & " Punto " & G_AsambleaPuntos(i) & " Hoja " & hoja & ".png", Imaging.ImageFormat.Png)
-
+                        b.Save("D:\hubiC\Asambleas\" & G_Build_ID & "\" & G_Build_ID & " Asamblea " & nom_asamblea & " Punto " & nom_punto & " Hoja " & hoja & ".png", Imaging.ImageFormat.Png)
                         count2 = 0
+
                     End If
 
                 Catch ex As Exception
-
+                    MsgBox("Error al imprimir " & ex.Message)
                 End Try
 
             Next
@@ -386,6 +360,36 @@ Public Class Form3
 
     Private Sub Form3_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Form2.Hide()
+
+        Cbx_Ipuntos.Visible = False
+        btnGenerate.Location = New Point(50, 264)
+
+        Dim dbCon As MySqlConnection
+        Dim strQuerry As String = ""
+        Dim SQLCmd As MySqlCommand
+        Dim DR As MySqlDataReader
+        Dim SDA As New MySqlDataAdapter
+        Dim dbDataSet As New DataTable
+        Dim bSource As New BindingSource
+        Dim id As String = gen_ids(4, G_Build_ID)
+        Try
+            dbCon = New MySqlConnection("Server=localhost;Database=asambleas_db;Uid=root;Pwd=1234")
+            strQuerry = "SELECT fecha_asamblea FROM asambleas_db.asambleas WHERE asambleas.proyecto_id = " & G_Build_ID & " GROUP BY fecha_asamblea ORDER BY fecha_asamblea;"
+            SQLCmd = New MySqlCommand(strQuerry, dbCon)
+            ' OPEN the DB and Kickoff the Query
+            dbCon.Open()
+            DR = SQLCmd.ExecuteReader
+
+            While DR.Read
+
+                Cbx_fechaAsamblea.Items.Add(DR.Item("fecha_asamblea"))
+
+            End While
+        Catch ex As Exception
+            MsgBox("Failure to communicate! 4...." & vbCrLf & ex.Message)
+        End Try
+
+
     End Sub
 
     Private Sub Form3_Paint(sender As Object, e As PaintEventArgs) Handles MyBase.Paint
@@ -405,7 +409,69 @@ Public Class Form3
         Form1.Show()
     End Sub
 
-    Private Sub tbx_Asamblea_TextChanged(sender As Object, e As EventArgs) Handles tbx_Asamblea.TextChanged
+    Private Sub tbx_Asamblea_TextChanged(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub Label2_Click(sender As Object, e As EventArgs) Handles Label2.Click
+
+    End Sub
+
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cbx_Asambleas.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub CheckBox1_CheckStateChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckStateChanged
+
+        If CheckBox1.Checked = True Then
+
+            btnGenerate.Location = New Point(55, 350)
+            Cbx_Ipuntos.Visible = True
+
+        ElseIf CheckBox1.Checked = False Then
+
+            Cbx_Ipuntos.Visible = False
+            btnGenerate.Location = New Point(55, 255)
+
+        End If
+
+
+
+    End Sub
+
+    Private Sub Cbx_fechaAsamblea_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles Cbx_fechaAsamblea.SelectionChangeCommitted
+
+        LoadAsambleas(Cbx_fechaAsamblea.SelectedItem)
+    End Sub
+
+    Private Sub Cbx_Asambleas_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles Cbx_Asambleas.SelectionChangeCommitted
+
+        Dim dbCon As MySqlConnection
+        dbCon = New MySqlConnection("Server=localhost;Database=asambleas_db;Uid=root;Pwd=1234")
+        Dim LookFor As String = ""
+
+        Dim strQuerry As String = ""
+        Dim SQLCmd As MySqlCommand
+        Dim DR As MySqlDataReader
+        Dim SDA As New MySqlDataAdapter
+        Dim dbDataSet As New DataTable
+        Dim bSource As New BindingSource
+        LookFor = Cbx_fechaAsamblea.SelectedItem
+
+        Try
+
+            strQuerry = "SELECT id_asamblea FROM asambleas_db.asambleas WHERE fecha_asamblea = '" & LookFor & "';"
+            SQLCmd = New MySqlCommand(strQuerry, dbCon)
+            dbCon.Open()
+            DR = SQLCmd.ExecuteReader
+            DR.Read()
+            G_Asamb_ID = DR.Item("id_asamblea")
+            dbCon.Close()
+        Catch ex As Exception
+            MsgBox("Failure to communicate!" & vbCrLf & ex.Message)
+
+        End Try
+        MsgBox("Listo para imprimir. Da clic en Generar Codigos")
 
     End Sub
 End Class

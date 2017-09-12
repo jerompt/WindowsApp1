@@ -45,7 +45,7 @@ Partial Class Form1
         Me.dgvAsistencia.AllowUserToAddRows = False
         Me.dgvAsistencia.AllowUserToDeleteRows = False
         Me.dgvAsistencia.AllowUserToResizeRows = False
-        Me.dgvAsistencia.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.dgvAsistencia.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.dgvAsistencia.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvAsistencia.Location = New System.Drawing.Point(16, 64)
         Me.dgvAsistencia.Name = "dgvAsistencia"
@@ -121,7 +121,7 @@ Partial Class Form1
         Me.lblNombre.Font = New System.Drawing.Font("Century Gothic", 19.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblNombre.Location = New System.Drawing.Point(12, 9)
         Me.lblNombre.Name = "lblNombre"
-        Me.lblNombre.Size = New System.Drawing.Size(501, 40)
+        Me.lblNombre.Size = New System.Drawing.Size(489, 40)
         Me.lblNombre.TabIndex = 5
         Me.lblNombre.Text = "Sistema de Votación Cobalto"
         '

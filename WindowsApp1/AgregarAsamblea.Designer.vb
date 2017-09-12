@@ -28,17 +28,18 @@ Partial Class AgregarAsamblea
         Me.dgvAsamblea = New System.Windows.Forms.DataGridView()
         Me.tbx_nombreA = New System.Windows.Forms.TextBox()
         Me.tbx_FechaA = New System.Windows.Forms.TextBox()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
+        Me.lbl_Nombre = New System.Windows.Forms.Label()
+        Me.lbl_date = New System.Windows.Forms.Label()
         Me.cbx_Asambleas = New System.Windows.Forms.ComboBox()
         Me.lblNombre = New System.Windows.Forms.Label()
         Me.dgv_numPunto = New System.Windows.Forms.DataGridView()
-        Me.Label4 = New System.Windows.Forms.Label()
+        Me.lbl_num = New System.Windows.Forms.Label()
         Me.tbx_punto = New System.Windows.Forms.TextBox()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.btn_refresh = New System.Windows.Forms.Button()
         Me.Button3 = New System.Windows.Forms.Button()
+        Me.Cbx_display = New System.Windows.Forms.CheckBox()
         CType(Me.dgvAsamblea, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgv_numPunto, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -55,6 +56,7 @@ Partial Class AgregarAsamblea
         '
         'dgvAsamblea
         '
+        Me.dgvAsamblea.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgvAsamblea.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
@@ -87,25 +89,25 @@ Partial Class AgregarAsamblea
         Me.tbx_FechaA.Size = New System.Drawing.Size(332, 32)
         Me.tbx_FechaA.TabIndex = 3
         '
-        'Label1
+        'lbl_Nombre
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(26, 93)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(101, 23)
-        Me.Label1.TabIndex = 4
-        Me.Label1.Text = "Nombre: "
+        Me.lbl_Nombre.AutoSize = True
+        Me.lbl_Nombre.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_Nombre.Location = New System.Drawing.Point(26, 93)
+        Me.lbl_Nombre.Name = "lbl_Nombre"
+        Me.lbl_Nombre.Size = New System.Drawing.Size(101, 23)
+        Me.lbl_Nombre.TabIndex = 4
+        Me.lbl_Nombre.Text = "Nombre: "
         '
-        'Label2
+        'lbl_date
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(26, 131)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(77, 23)
-        Me.Label2.TabIndex = 5
-        Me.Label2.Text = "Fecha:"
+        Me.lbl_date.AutoSize = True
+        Me.lbl_date.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_date.Location = New System.Drawing.Point(26, 131)
+        Me.lbl_date.Name = "lbl_date"
+        Me.lbl_date.Size = New System.Drawing.Size(77, 23)
+        Me.lbl_date.TabIndex = 5
+        Me.lbl_date.Text = "Fecha:"
         '
         'cbx_Asambleas
         '
@@ -128,6 +130,7 @@ Partial Class AgregarAsamblea
         '
         'dgv_numPunto
         '
+        Me.dgv_numPunto.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgv_numPunto.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
@@ -144,15 +147,15 @@ Partial Class AgregarAsamblea
         Me.dgv_numPunto.Size = New System.Drawing.Size(495, 560)
         Me.dgv_numPunto.TabIndex = 8
         '
-        'Label4
+        'lbl_num
         '
-        Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(926, 131)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(88, 23)
-        Me.Label4.TabIndex = 12
-        Me.Label4.Text = "Número"
+        Me.lbl_num.AutoSize = True
+        Me.lbl_num.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_num.Location = New System.Drawing.Point(926, 131)
+        Me.lbl_num.Name = "lbl_num"
+        Me.lbl_num.Size = New System.Drawing.Size(88, 23)
+        Me.lbl_num.TabIndex = 12
+        Me.lbl_num.Text = "Número"
         '
         'tbx_punto
         '
@@ -202,22 +205,33 @@ Partial Class AgregarAsamblea
         Me.Button3.Text = "Back"
         Me.Button3.UseVisualStyleBackColor = True
         '
+        'Cbx_display
+        '
+        Me.Cbx_display.AutoSize = True
+        Me.Cbx_display.Location = New System.Drawing.Point(190, 180)
+        Me.Cbx_display.Name = "Cbx_display"
+        Me.Cbx_display.Size = New System.Drawing.Size(208, 21)
+        Me.Cbx_display.TabIndex = 16
+        Me.Cbx_display.Text = "Despliega nombre Completo"
+        Me.Cbx_display.UseVisualStyleBackColor = True
+        '
         'AgregarAsamblea
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1449, 848)
+        Me.Controls.Add(Me.Cbx_display)
         Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.btn_refresh)
         Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.Label4)
+        Me.Controls.Add(Me.lbl_num)
         Me.Controls.Add(Me.tbx_punto)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.dgv_numPunto)
         Me.Controls.Add(Me.lblNombre)
         Me.Controls.Add(Me.cbx_Asambleas)
-        Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.lbl_date)
+        Me.Controls.Add(Me.lbl_Nombre)
         Me.Controls.Add(Me.tbx_FechaA)
         Me.Controls.Add(Me.tbx_nombreA)
         Me.Controls.Add(Me.dgvAsamblea)
@@ -235,15 +249,16 @@ Partial Class AgregarAsamblea
     Friend WithEvents dgvAsamblea As DataGridView
     Friend WithEvents tbx_nombreA As TextBox
     Friend WithEvents tbx_FechaA As TextBox
-    Friend WithEvents Label1 As Label
-    Friend WithEvents Label2 As Label
+    Friend WithEvents lbl_Nombre As Label
+    Friend WithEvents lbl_date As Label
     Friend WithEvents cbx_Asambleas As ComboBox
     Friend WithEvents lblNombre As Label
     Friend WithEvents dgv_numPunto As DataGridView
-    Friend WithEvents Label4 As Label
+    Friend WithEvents lbl_num As Label
     Friend WithEvents tbx_punto As TextBox
     Friend WithEvents Button2 As Button
     Friend WithEvents Label3 As Label
     Friend WithEvents btn_refresh As Button
     Friend WithEvents Button3 As Button
+    Friend WithEvents Cbx_display As CheckBox
 End Class
