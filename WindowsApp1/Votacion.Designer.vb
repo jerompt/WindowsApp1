@@ -64,9 +64,9 @@ Partial Class Votacion
         Me.Label1.Font = New System.Drawing.Font("Century Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(24, 49)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(182, 23)
+        Me.Label1.Size = New System.Drawing.Size(82, 23)
         Me.Label1.TabIndex = 2
-        Me.Label1.Text = "Lector de Código"
+        Me.Label1.Text = "Código"
         '
         'Label2
         '

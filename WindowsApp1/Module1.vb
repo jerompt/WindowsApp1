@@ -1,8 +1,6 @@
 ﻿Imports MySql.Data
 Imports MySql.Data.MySqlClient
-Imports KeepDynamic.Barcode.Generator
-
-
+Imports BarcodeLib
 
 Module GlobalVariables
 
@@ -884,5 +882,16 @@ B:
         Return n
 
     End Function
+
+    Public Sub GenBarCode(tempGenCode As String)
+        Dim bar As New Barcode
+        Dim s As Integer = 3
+
+        bar.RotateFlipType = RotateFlipType.Rotate90FlipX
+        bar.Encode(BarcodeLib.TYPE.CODE128B, tempGenCode, 150 * s, 40 * s)
+        bar.SaveImage("D:\hubiC\Asambleas\" & G_Build_ID & "\CodigosGenerados\" & tempGenCode & ".png", SaveTypes.PNG)
+
+
+    End Sub
 
 End Module

@@ -47,6 +47,9 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BarcodeLib">
+      <HintPath>D:\hubiC\Asambleas\BarcodeLib.dll</HintPath>
+    </Reference>
     <Reference Include="MessagingToolkit.Barcode">
       <HintPath>..\..\..\..\..\hubiC\Asambleas\MessagingToolkit.Barcode.dll</HintPath>
     </Reference>
