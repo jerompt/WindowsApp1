@@ -31,3 +31,4 @@ C:\Users\Jerónimo\Documents\GitHub\WindowsApp1\WindowsApp1\obj\Debug\WindowsApp
 C:\Users\Jerónimo\Documents\GitHub\WindowsApp1\WindowsApp1\bin\Debug\MySql.Data.dll
 C:\Users\Jerónimo\Documents\GitHub\WindowsApp1\WindowsApp1\bin\Debug\MySql.Data.xml
 C:\Users\Jerónimo\Documents\GitHub\WindowsApp1\WindowsApp1\obj\Debug\WindowsApp1.AgregarAsamblea.resources
+C:\Users\Jerónimo\Documents\GitHub\WindowsApp1\WindowsApp1\bin\Debug\BarcodeLib.dll
