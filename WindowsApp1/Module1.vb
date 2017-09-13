@@ -1,14 +1,15 @@
 ﻿Imports MySql.Data
 Imports MySql.Data.MySqlClient
+Imports KeepDynamic.Barcode.Generator
+
+
 
 Module GlobalVariables
 
 
     Public G_NumAsa As Integer
-
     Public G_Build_ID As Integer
     Public G_Asamb_ID As Integer
-
     Public GL_depto As String
     Public GL_torre As String
     Public GL_indiviso As String
@@ -297,7 +298,7 @@ A:
         Dim code As String = ""
 
         If i < 10 Then
-            code = " " & i
+            code = "0" & i
         End If
 
         Return code
@@ -347,7 +348,6 @@ A:
             strQuerry = "SELECT n_propiedad, torre, depto, indiviso FROM asambleas_db.propiedades WHERE proyecto_id = " & G_Build_ID & "
                             LIMIT " & n & ",1 ;"
             SQLCmd = New MySqlCommand(strQuerry, dbCon)
-            Console.WriteLine(SQLCmd)
             ' OPEN the DB and Kickoff the Query
             dbCon.Open()
             DR = SQLCmd.ExecuteReader
@@ -884,4 +884,5 @@ B:
         Return n
 
     End Function
+
 End Module
